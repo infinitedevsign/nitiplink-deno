@@ -1,0 +1,14 @@
+{
+	"name": "NitipLink",
+	"version": "1.0.0",
+	"description": "an awesome project for your important links",
+	"keywords": [
+		"nitiplink",
+		"nitip",
+		"link"
+	],
+	"hasShowcase": false,
+	"tasks": {
+		"start-web": "deno run --allow-net --allow-read --allow-env --allow-write --watch app.ts"
+	}
+}

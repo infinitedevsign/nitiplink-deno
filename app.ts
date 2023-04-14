@@ -1,20 +1,16 @@
-import {
-  Application,
-  Router,
-  Status,
-} from "https://deno.land/x/oak@v11.1.0/mod.ts";
-import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
-import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
+import { Application, Status, oakCors } from './deps.ts';
+import { router } from "./routes/routes.ts";
+import { API_HOST, PORT } from './config/environment.ts';
+import { Context } from './types.ts';
+import { logger } from './util/logger.ts';
 
-const router = new Router();
-
-const port = parseInt(config().PORT) || 3000;
+const port = parseInt(PORT) || 3000;
 
 router.get("/", (ctx) => {
   ctx.response.body = "ok ngab.";
 });
 
-const app = new Application();
+const app = new Application<Context>();
 app.use(oakCors()); // Enable CORS for All Routes
 app.use(router.routes());
 app.use(router.allowedMethods());
@@ -35,5 +31,5 @@ app.use((context) => {
   context.response.body = `"${context.request.url}" not found`;
 });
 
-console.info(`CORS-enabled web server listening on port ${port}`);
+logger.info(`Application is running on: ${API_HOST}:${PORT}`);
 await app.listen({ port });
